@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oziris - Roblox Project Executor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        /* Global Styles */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1c1c1e, #272727);
+            color: #f0f1f6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #610f7f, #9c2aa0);
+            padding: 50px 20px;
+            color: #ffffff;
+            border-bottom: 8px solid #73259c;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://via.placeholder.com/1920x400?text=Header+Background') no-repeat center center;
+            background-size: cover;
+            opacity: 0.3;
+            z-index: -1;
+            filter: blur(12px);
+        }
+
+        h1 {
+            font-size: 4.5em;
+            margin: 0;
+            text-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
+            animation: fadeIn 2s ease-in-out, bounce 3s infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .container {
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        p {
+            font-size: 1.25em;
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #e0e0e0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 30px 0;
+            background: linear-gradient(135deg, #73259c, #9c2aa0);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.4em;
+            border-radius: 15px;
+            transition: background 0.4s, transform 0.3s, box-shadow 0.4s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: width 0.5s, height 0.5s;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        .button:hover::before {
+            width: 0;
+            height: 0;
+        }
+
+        .button:hover {
+            background: linear-gradient(135deg, #9c2aa0, #73259c);
+            transform: scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.8);
+        }
+
+        footer {
+            background: #1c1c1e;
+            padding: 30px 20px;
+            color: #ffffff;
+            border-top: 8px solid #73259c;
+            box-shadow: 0 -8px 20px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .features, .testimonials, .showcase {
+            padding: 50px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin: 30px auto;
+            max-width: 1200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features h2, .testimonials h2, .showcase h2 {
+            font-size: 2.5em;
+            color: #a63f9b;
+            margin: 0 0 30px;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            padding-bottom: 10px;
+            border-bottom: 4px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .features ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            z-index: 1;
+        }
+
+        .features li {
+            font-size: 1.3em;
+            margin: 15px 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .features li:hover {
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .features li::before {
+            content: "▼";
+            font-size: 1.2em;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s;
+        }
+
+        .features li.active::before {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .feature-description {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, opacity 0.3s;
+            font-size: 1.1em;
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 10px;
+            opacity: 0;
+        }
+
+        .features li.active .feature-description {
+            opacity: 1;
+        }
+
+        .showcase {
+            border: 4px solid #73259c;
+            animation: borderAnimation 5s infinite;
+        }
+
+        @keyframes borderAnimation {
+            0%, 100% {
+                border-color: #73259c;
+                box-shadow: 0 0 15px rgba(115, 37, 156, 0.5);
+            }
+            25% {
+                border-color: #9c2aa0;
+                box-shadow: 0 0 20px rgba(156, 42, 160, 0.5);
+            }
+            50% {
+                border-color: #c700ff;
+                box-shadow: 0 0 25px rgba(199, 0, 255, 0.5);
+            }
+            75% {
+                border-color: #9c2aa0;
+                box-shadow: 0 0 20px rgba(156, 42, 160, 0.5);
+            }
+        }
+
+        .showcase .showcase-item {
+            margin: 20px 0;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .showcase .showcase-item video {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .showcase .showcase-item video:hover {
+            transform: scale(1.05);
+        }
+
+        .showcase .showcase-item img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .showcase .showcase-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .testimonials blockquote {
+            font-size: 1.3em;
+            font-style: italic;
+            margin: 30px auto;
+            max-width: 900px;
+            line-height: 1.8;
+            text-align: center;
+            color: #d3cce3;
+            position: relative;
+            z-index: 1;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .testimonials blockquote:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .testimonials blockquote::before {
+            content: "“";
+            font-size: 3em;
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            color: #6a1b9a;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .testimonials blockquote::after {
+            content: "”";
+            font-size: 3em;
+            position: absolute;
+            bottom: -20px;
+            right: 10px;
+            color: #6a1b9a;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        .testimonials::before, .features::before, .showcase::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            animation: pulse 5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                opacity: 0.1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container, .features, .testimonials, .showcase {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 3em;
+            }
+
+            .button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            .features li, .testimonials blockquote {
+                font-size: 1em;
+            }
+        }
+
+        /* SVG Logo Styling */
+        .logo {
+            width: 300px;
+            height: 150px;
+            margin: 0 auto 20px;
+            display: block;
+            animation: logoFadeIn 2s ease-out;
+            filter: drop-shadow(0 0 10px rgba(102, 51, 153, 0.8));
+        }
+
+        @keyframes logoFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Oziris Logo SVG -->
+        <svg class="logo" xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150">
+            <!-- Gradient Definitions -->
+            <defs>
+                <linearGradient id="backgroundGradient" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#610f7f"/>
+                    <stop offset="100%" stop-color="#9c2aa0"/>
+                </linearGradient>
+                <radialGradient id="symbolGradient" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+                    <stop offset="0%" stop-color="#e0e0e0" />
+                    <stop offset="100%" stop-color="#c700ff" />
+                </radialGradient>
+            </defs>
+
+            <!-- Outer Circle with Glowing Effect -->
+            <circle cx="75" cy="75" r="70" fill="none" stroke="url(#backgroundGradient)" stroke-width="8" filter="url(#glow)"/>
+
+            <!-- Glow Effect -->
+            <filter id="glow">
+                <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+                <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+
+            <!-- Inner Triangular Spiral Symbol -->
+            <path d="M75 25 L95 125 L55 125 Z" fill="url(#symbolGradient)" transform="rotate(25,75,75)"/>
+            <path d="M75 35 L90 115 L60 115 Z" fill="#6e006e" transform="rotate(25,75,75)"/>
+
+            <!-- Text with Glow -->
+            <text x="160" y="90" font-family="Montserrat, sans-serif" font-weight="700" font-size="50" fill="url(#backgroundGradient)">
+                Oziris
+            </text>
+            <text x="162" y="92" font-family="Montserrat, sans-serif" font-weight="700" font-size="50" fill="#1c1c1e" opacity="0.2">
+                Oziris
+            </text>
+        </svg>
+
+        <h1>Welcome to Oziris</h1>
+        <p>Your ultimate Roblox project executor. Experience seamless execution, robust security, and unparalleled customization.</p>
+        <a href="https://cdn.discordapp.com/attachments/1235643100572024933/1269600236674744413/Oziris.zip?ex=66b0a6dc&is=66af555c&hm=c3951208d588cbc9b89403bd4d07369937903560fd1fc80e1dc7d739a7a76b79&" class="button">Download Now</a>
+    </header>
+
+    <div class="container features">
+        <h2>Key Features</h2>
+        <ul>
+            <li onclick="toggleDescription(this)">
+                Advanced Script Execution
+                <div class="feature-description">
+                    <p>Experience the power of Oziris with our advanced script execution feature, designed for seamless integration and performance. Easily execute complex scripts with high efficiency and reliability, making cheating faster and more enjoyable.</p>
+                </div>
+            </li>
+            <li onclick="toggleDescription(this)">
+                Customizable User Interface
+                <div class="feature-description">
+                    <p>Customize your experience with a flexible UI that adapts to your needs, offering a user-friendly interface and easy navigation. Choose from a variety of themes, layouts, and widgets to create the perfect development environment.</p>
+                </div>
+            </li>
+            <li onclick="toggleDescription(this)">
+                Time and Effort
+                <div class="feature-description">
+                    <p>With  more than 400 hours dedicated to this project to bring the best experience, everything has been made to perfection. Updates wil come to improve experience.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container showcase">
+        <h2>Showcase</h2>
+        <div class="showcase-item">
+            <video autoplay loop muted playsinline>
+                <source src="https://imgur.com/3U292fP.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <h3>Powerful Script Execution</h3>
+            <p>Experience the power of Oziris with our advanced script execution feature, designed for seamless integration and performance.</p>
+        </div>
+        <div class="showcase-item">
+            <img src="https://cdn.discordapp.com/attachments/1235643100572024933/1269606871530995712/Schermafbeelding_2024-08-04_114332.png?ex=66b0ad0a&is=66af5b8a&hm=fa79bfca714e788208877406934617dde93dac3bab1c8e8c175bfeaf553b7945&" alt="Showcase 2">
+            <h3>Clean, Simple and Professional UI</h3>
+            <p>Customize your experience with a flexible UI that adapts to your needs, offering a user-friendly interface and easy navigation.</p>
+        </div>
+        <div class="showcase-item">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#663399" width="200" height="200">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M11.5 12H6.6C6.26863 12 6 12.2686 6 12.6V19.4C6 19.7314 6.26863 20 6.6 20H17.4C17.7314 20 18 19.7314 18 19.4V18.5" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M16 12V8C16 6.66667 15.2 4 12 4C11.2532 4 10.6371 4.14525 10.1313 4.38491" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M16 12H17.4C17.7314 12 18 12.2686 18 12.6V13" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M8 8V8.5V12" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M3 3L21 21" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </svg>
+            <h3>Keyless</h3>
+            <p>A keyless and powerful custom API made to enhance experience.</p>
+        </div>
+    </div>
+
+    <div class="container testimonials">
+        <h2>Testimonials</h2>
+        <blockquote>"Oziris has transformed the way I work with Roblox cheats. The interface is intuitive, and the script execution is flawless. A must-have tool for any cheat designer or user!" - yino38</blockquote>
+        <blockquote>"The keyless part makes this a daily use and simple to start with. Highly recommended!" - puqx</blockquote>
+    </div>
+
+    <footer>
+        <p>© 2024 Oziris. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleDescription(element) {
+            element.classList.toggle('active');
+            var description = element.querySelector('.feature-description');
+            if (description.style.maxHeight) {
+                description.style.maxHeight = null;
+            } else {
+                description.style.maxHeight = description.scrollHeight + "px";
+            }
+        }
+    </script>
+</body>
+</html>
